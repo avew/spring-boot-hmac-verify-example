@@ -1,0 +1,7 @@
+server:
+  port: 9292
+
+app:
+  hmac:
+    client-id: app-client
+    client-secret: app-secret

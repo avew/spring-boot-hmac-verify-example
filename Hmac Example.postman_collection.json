@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "0132284c-dd87-4b9b-8b87-ad3df09aa1d4",
+		"name": "Hmac Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22905256"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9292/api/v1/stamp",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"var ts = moment().format(\"yyyyMMDDhhmmss\")\r",
+							"// console.log(\"TS \" + ts)\r",
+							"var clientSecret = pm.collectionVariables.get(\"client_secret\");\r",
+							"var request = \"HmacSHA256:\" + clientSecret +\":\"+ ts\r",
+							"// console.log(\"Request \" + request)\r",
+							"// console.log(\"Client secret \" + clientSecret)\r",
+							"var data = CryptoJS.HmacSHA256(request,clientSecret).toString();\r",
+							"// console.log(\"HMAC \" + data)\r",
+							"// console.log(\"BODY \" + pm.request.body)\r",
+							"// var base64Hash = CryptoJS.enc.Utf8.parse(data);\r",
+							"// var base64 = CryptoJS.enc.Base64.stringify(base64Hash);\r",
+							"pm.collectionVariables.set(\"signature\",data)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Signature",
+						"value": "{{signature}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Client-Id",
+						"value": "app-client",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ping\":\"pong\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9292/api/v1/stamp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9292",
+					"path": [
+						"api",
+						"v1",
+						"stamp"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "client_secret",
+			"value": "app_secret",
+			"type": "string"
+		},
+		{
+			"key": "signature",
+			"value": ""
+		}
+	]
+}
