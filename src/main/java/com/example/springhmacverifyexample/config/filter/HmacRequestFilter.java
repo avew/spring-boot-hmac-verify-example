@@ -11,11 +11,11 @@ import java.io.IOException;
 
 
 @Slf4j
-public class HmacFilter implements Filter {
+public class HmacRequestFilter implements Filter {
 
     private final ApplicationProperties applicationProperties;
 
-    public HmacFilter(ApplicationProperties applicationProperties) {
+    public HmacRequestFilter(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 

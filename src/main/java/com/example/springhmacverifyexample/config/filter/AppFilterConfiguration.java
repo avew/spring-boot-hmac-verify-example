@@ -12,13 +12,12 @@ public class AppFilterConfiguration {
 
     private final ApplicationProperties applicationProperties;
 
-    // uncomment this and comment the @Component in the filter class definition to register only for a url pattern
     @Bean
-    public FilterRegistrationBean<HmacFilter> hmacFilter() {
-        FilterRegistrationBean<HmacFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new HmacFilter(applicationProperties));
+    public FilterRegistrationBean<HmacRequestFilter> hmacFilter() {
+        FilterRegistrationBean<HmacRequestFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new HmacRequestFilter(applicationProperties));
         registrationBean.addUrlPatterns("/api/v1/stamp");
-        registrationBean.setOrder(1);
+        registrationBean.setOrder(2);
         return registrationBean;
 
     }

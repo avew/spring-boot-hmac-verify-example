@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@Order(2)
+@Order(1)
 @Slf4j
 public class RequestResponseLoggingFilter implements Filter {
 
